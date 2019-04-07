@@ -9,7 +9,9 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns">
+                <div [class]="col.type">
                 {{getCellValue(rowData, col.field)}}
+                </div>
             </td>
         </tr>
     </ng-template>

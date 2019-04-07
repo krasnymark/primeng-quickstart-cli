@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
             { field: 'year', header: 'Year' },
             { field: 'brand', header: 'Brand' },
             { field: 'color', header: 'Color' },
-            { field: 'saleDate', header: 'Sale Date' }
+            { field: 'price', header: 'Price', type: 'number' },
+            { field: 'saleDate', header: 'Sale Date', type: 'date' }
         ];
 
         this.brands = [
