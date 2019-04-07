@@ -7,8 +7,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 import { AppComponent } from './app.component';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -22,9 +26,14 @@ import { AppComponent } from './app.component';
         HttpClientModule,
         InputTextModule,
         DialogModule,
-        ButtonModule
+        ButtonModule,
+        DropdownModule,
+        CalendarModule
     ],
-    providers: [],
+    providers: [
+        MessageService,
+        DatePipe
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

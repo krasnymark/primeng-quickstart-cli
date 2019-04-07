@@ -1,4 +1,4 @@
-<p-table [columns]="cols" [value]="cars" selectionMode="single" [(selection)]="selectedCar" (onRowSelect)="onRowSelect($event)" [paginator]="true" rows="10">
+<p-table [columns]="cols" [value]="cars1" selectionMode="single" [(selection)]="selectedCar" (onRowSelect)="onRowSelect($event)" [paginator]="true" rows="10">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -9,7 +9,7 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns">
-                {{rowData[col.field]}}
+                {{getCellValue(rowData, col.field)}}
             </td>
         </tr>
     </ng-template>
@@ -21,7 +21,73 @@
     </ng-template>
 </p-table>
 
-<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [closable]="true" [width]="300">
+<h3>Row Editing</h3>
+<p-table [value]="cars2" dataKey="vin" editMode="row">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Vin</th>
+            <th>Year</th>
+            <th>Brand</th>
+            <th>Color</th>
+            <th>Sold</th>
+            <th style="width:8em"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="rowData">
+            <td>
+                {{rowData.vin}}
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="rowData.year" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.year}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="brands" [(ngModel)]="rowData.brand" [style]="{'width':'100%'}"></p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.brand}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="rowData.color">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.color}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-calendar [(ngModel)]="rowData.saleDate" [style]="{'width':'100%'}"></p-calendar>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.saleDate | date}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td style="text-align:center">
+                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [closable]="true" >
     <div class="ui-g ui-fluid" *ngIf="car">
         <div class="ui-g-4"><label for="vin">Vin</label></div>
         <div class="ui-g-8"><input pInputText id="vin" [(ngModel)]="car.vin" /></div>
@@ -34,6 +100,9 @@
         
         <div class="ui-g-4"><label for="color">Color</label></div>
         <div class="ui-g-8"><input pInputText id="color" [(ngModel)]="car.color" /></div>
+        
+        <div class="ui-g-4"><label for="saleDate">Sale Date</label></div>
+        <div class="ui-g-8"><p-calendar [(ngModel)]="car.saleDate" [style]="{'height':'420px'}"></p-calendar></div>
     </div>
     <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
