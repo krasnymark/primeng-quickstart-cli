@@ -9,6 +9,10 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 import { AppComponent } from './app.component';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -25,10 +29,14 @@ import { DatePipe } from '@angular/common';
         TableModule,
         HttpClientModule,
         InputTextModule,
+        ToastModule,
         DialogModule,
         ButtonModule,
+        MessageModule,
+        MessagesModule,
         DropdownModule,
-        CalendarModule
+        CalendarModule,
+        ContextMenuModule
     ],
     providers: [
         MessageService,

@@ -1,8 +1,8 @@
 export interface Car {
-    vin?;
-    year?;
-    brand?;
-    color?;
-    price?;
-    saleDate?;
+    vin?: string;
+    year?: number;
+    brand?: string;
+    color?: string;
+    price?: number;
+    saleDate?: Date;
 }
